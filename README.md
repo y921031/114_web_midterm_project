@@ -1,43 +1,44 @@
-# 💰 記帳小幫手（加分版）
+# 記帳工具
 
-## 👥 組員分工
+## 組員分工
 | 組員 | 負責項目 |
 |------|------------|
-| 王小明（組長） | HTML 結構設計、Bootstrap 版面配置 |
-| 陳小美 | CSS 設計、RWD、深色模式 |
-| 林阿凱 | JavaScript 互動功能、localStorage、表單驗證 |
+| 黃俞媞 | HTML 結構設計、Bootstrap 版面配置 |
+|  | CSS 設計、RWD、深色模式 |
+|  | JavaScript 互動功能、localStorage、表單驗證 |
 
 ---
 
-## 📖 專案簡介
-這是一個可即時新增、刪除與儲存的「記帳工具」。  
-支援深色模式、自動儲存資料、淡入動畫效果與表單驗證。
+## 專案簡介
+這是一個以 HTML+CSS+JavaScript 製作的互動式記帳工具，支援：收入與支出分類統計、深淺色主題切換、資料永久儲存(localStorage) 、每月與年度圖表分析。
+版面設計以淺色以藍色系為主，深色以深灰色為主，簡約清晰並適配所有螢幕比例。
 
 ---
 
-## 🧰 使用技術
+## 使用技術
 - HTML5 + Bootstrap 5  
 - CSS3（RWD、深色模式、動畫）
-- JavaScript（DOM 操作、Constraint Validation API、localStorage）
+- JavaScript（DOM操作、Constraint Validation API、localStorage）
 
 ---
 
-## ✨ 功能特色
-1. 表單即時驗證（空白、金額需大於 0）
-2. 新增 / 刪除記帳項目
-3. 即時計算總金額
-4. 自動儲存至 localStorage（重新整理不會消失）
-5. 一鍵切換深色 / 淺色模式
-6. 淡入動畫效果（UX 佳）
+## 功能特色
+1. 表單即時驗證（空白、金額需大於0）
+2. 新增「收入」或「支出」紀錄
+1. 刪除記帳項目
+2. 可自訂分類（如新增「投資」、「旅遊」等）
+3. 自動計算本月與本年收入、支出總額
+4. 以圖表呈現每月與年度的統計結果
+5. 支援 localStorage，自動保存紀錄，下次開啟不會消失
 
 ---
 
-## 🚀 GitHub Pages 展示
-> https://你的帳號.github.io/114_web_midterm_project
+## GitHub Pages 展示
+> https://account.github.io/114_web_midterm_project(記得改)
 
 ---
 
-## 📂 專案結構
+## 專案結構
 ```
 midterm_project/
 ├── index.html
@@ -49,8 +50,8 @@ midterm_project/
 
 ---
 
-## 🏆 加分項目
-- ✅ 使用 localStorage（資料保存）
-- ✅ 動畫效果
-- ✅ 深色模式切換
-- ✅ 完整 RWD
+## 加分項目
+- 深色/淺色模式切換（會記錄使用者偏好）
+- localStorage儲存資料
+- 雙統計圖表（每月、每年：收入+支出）
+- 自動RWD適應各種螢幕比例

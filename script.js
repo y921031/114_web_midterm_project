@@ -9,13 +9,31 @@ const newCategoryInput = document.getElementById("newCategory");
 const totalIncomeEl = document.getElementById("totalIncome");
 const totalExpenseEl = document.getElementById("totalExpense");
 
+// 收入/支出分類
+const categories = {
+  收入: ["薪水","獎金","投資","其他收入"],
+  支出: ["飲食","交通","娛樂","生活用品"]
+};
+
 let records = JSON.parse(localStorage.getItem("records")) || [];
-let currentType = "收入";
+let currentType = "支出"; // 預設支出
+
+// 初始化分類
+function renderCategory() {
+  categorySelect.innerHTML = "";
+  categories[currentType].forEach(c => {
+    const option = document.createElement("option");
+    option.value = c;
+    option.textContent = c;
+    categorySelect.appendChild(option);
+  });
+}
+renderCategory();
 
 // 初始化主題
 if (localStorage.getItem("darkMode") === "true") {
   body.classList.add("dark-mode");
-  modeToggle.textContent = "淺色模式";
+  modeToggle.textContent = "切換為淺色模式";
 }
 
 // 模式切換
@@ -23,29 +41,29 @@ modeToggle.addEventListener("click", () => {
   body.classList.toggle("dark-mode");
   const dark = body.classList.contains("dark-mode");
   localStorage.setItem("darkMode", dark);
-  modeToggle.textContent = dark ? "淺色模式" : "深色模式";
+  modeToggle.textContent = dark ? "切換為淺色模式" : "切換為深色模式";
 });
 
-// 收入 / 支出切換
+// 收入/支出切換
 incomeBtn.addEventListener("click", () => {
   currentType = "收入";
   incomeBtn.classList.add("active");
   expenseBtn.classList.remove("active");
+  renderCategory();
 });
 expenseBtn.addEventListener("click", () => {
   currentType = "支出";
   expenseBtn.classList.add("active");
   incomeBtn.classList.remove("active");
+  renderCategory();
 });
 
 // 新增分類
 document.getElementById("addCategory").addEventListener("click", () => {
   const newCat = newCategoryInput.value.trim();
   if (newCat) {
-    const option = document.createElement("option");
-    option.value = newCat;
-    option.textContent = newCat;
-    categorySelect.appendChild(option);
+    categories[currentType].push(newCat);
+    renderCategory();
     newCategoryInput.value = "";
   }
 });
@@ -58,22 +76,24 @@ form.addEventListener("submit", (e) => {
   const date = document.getElementById("date").value;
   if (!amount || !date) return alert("請輸入金額與日期！");
   const record = { type: currentType, amount, category, date };
-  records.push(record);
+  records.unshift(record); // 新增在最上方
   localStorage.setItem("records", JSON.stringify(records));
   renderRecords();
   form.reset();
 });
 
-// 渲染記錄
+// 渲染紀錄
 function renderRecords() {
   recordList.innerHTML = "";
-  let income = 0, expense = 0;
+  let incomeTotal = 0, expenseTotal = 0;
+
   records.forEach((r, i) => {
-    if (r.type === "收入") income += r.amount;
-    else expense += r.amount;
+    if (r.type === "收入") incomeTotal += r.amount;
+    else expenseTotal += r.amount;
 
     const div = document.createElement("div");
     div.classList.add("record-card");
+    if (r.type === "收入") div.classList.add("income");
     div.innerHTML = `
       <div class="record-info">
         <strong>${r.type}</strong>
@@ -87,8 +107,10 @@ function renderRecords() {
     `;
     recordList.appendChild(div);
   });
-  totalIncomeEl.textContent = income;
-  totalExpenseEl.textContent = expense;
+
+  totalIncomeEl.textContent = incomeTotal;
+  totalExpenseEl.textContent = expenseTotal;
+
   updateCharts();
 }
 
@@ -107,35 +129,64 @@ let monthChart, yearChart;
 function updateCharts() {
   const ctxM = document.getElementById("monthChart").getContext("2d");
   const ctxY = document.getElementById("yearChart").getContext("2d");
-  const monthly = Array(12).fill(0);
-  const yearly = {};
+
+  const monthlyIncome = Array(12).fill(0);
+  const monthlyExpense = Array(12).fill(0);
+  const yearlyIncome = {};
+  const yearlyExpense = {};
 
   records.forEach(r => {
     const date = new Date(r.date);
     const month = date.getMonth();
     const year = date.getFullYear();
-    if (r.type === "支出") monthly[month] += r.amount;
-    yearly[year] = (yearly[year] || 0) + r.amount;
+
+    if (r.type === "收入") {
+      monthlyIncome[month] += r.amount;
+      yearlyIncome[year] = (yearlyIncome[year] || 0) + r.amount;
+    } else {
+      monthlyExpense[month] += r.amount;
+      yearlyExpense[year] = (yearlyExpense[year] || 0) + r.amount;
+    }
   });
 
   if (monthChart) monthChart.destroy();
   if (yearChart) yearChart.destroy();
 
+  const isDark = body.classList.contains("dark-mode");
+
+  // 月統計
   monthChart = new Chart(ctxM, {
     type: "bar",
     data: {
       labels: ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
-      datasets: [{ label: "每月支出", data: monthly, backgroundColor: "#a8d8ff" }]
+      datasets: [
+        { label: "收入", data: monthlyIncome, backgroundColor: isDark ? "#888" : "#4ea1d3" },
+        { label: "支出", data: monthlyExpense, backgroundColor: isDark ? "#555" : "#a8d8ff" }
+      ]
     }
   });
+
+  // 年統計
+  const years = Array.from(new Set([...Object.keys(yearlyIncome), ...Object.keys(yearlyExpense)]));
+  const incomeData = years.map(y => yearlyIncome[y] || 0);
+  const expenseData = years.map(y => yearlyExpense[y] || 0);
 
   yearChart = new Chart(ctxY, {
     type: "bar",
     data: {
-      labels: Object.keys(yearly),
-      datasets: [{ label: "年度總支出", data: Object.values(yearly), backgroundColor: "#a8d8ff" }]
+      labels: years,
+      datasets: [
+        { label: "收入", data: incomeData, backgroundColor: isDark ? "#888" : "#4ea1d3" },
+        { label: "支出", data: expenseData, backgroundColor: isDark ? "#555" : "#a8d8ff" }
+      ]
     }
   });
+
+  // 顯示總額文字
+  document.getElementById("monthSummary").textContent =
+    `本月收入：$${monthlyIncome.reduce((a,b)=>a+b,0)}, 本月支出：$${monthlyExpense.reduce((a,b)=>a+b,0)}`;
+  document.getElementById("yearSummary").textContent =
+    `本年收入：$${incomeData.reduce((a,b)=>a+b,0)}, 本年支出：$${expenseData.reduce((a,b)=>a+b,0)}`;
 }
 
 renderRecords();

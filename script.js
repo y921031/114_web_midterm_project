@@ -61,7 +61,7 @@ expenseBtn.addEventListener("click", () => {
 // 新增分類
 document.getElementById("addCategory").addEventListener("click", () => {
   const newCat = newCategoryInput.value.trim();
-  if (newCat) {
+  if (newCat && !categories[currentType].includes(newCat)) {
     categories[currentType].push(newCat);
     renderCategory();
     newCategoryInput.value = "";
@@ -74,7 +74,19 @@ form.addEventListener("submit", (e) => {
   const amount = parseFloat(document.getElementById("amount").value);
   const category = categorySelect.value;
   const date = document.getElementById("date").value;
-  if (!amount || !date) return alert("請輸入金額與日期！");
+
+  // UX 提示與金額限制
+  if (!amount || !date) {
+    formMessage.textContent = "金額不得為0！";
+    formMessage.style.display = "block";
+    return;
+  } else if (amount <= 0) {
+    formMessage.textContent = "金額必須大於 0！";
+    formMessage.style.display = "block";
+    return;
+  }
+  formMessage.style.display = "none";
+
   const record = { type: currentType, amount, category, date };
   records.unshift(record); // 新增在最上方
   localStorage.setItem("records", JSON.stringify(records));
@@ -118,13 +130,17 @@ function renderRecords() {
 recordList.addEventListener("click", (e) => {
   if (e.target.classList.contains("delete-btn")) {
     const index = e.target.dataset.index;
-    records.splice(index, 1);
-    localStorage.setItem("records", JSON.stringify(records));
-    renderRecords();
+    const card = e.target.closest(".record-card");
+    card.classList.add("removing");
+    setTimeout(() => {
+      records.splice(index, 1);
+      localStorage.setItem("records", JSON.stringify(records));
+      renderRecords();
+    }, 300); // 等動畫完成再刪除
   }
 });
 
-// 📊 統計圖
+// 統計圖
 let monthChart, yearChart;
 function updateCharts() {
   const ctxM = document.getElementById("monthChart").getContext("2d");

@@ -141,7 +141,7 @@ button:hover {
   white-space: nowrap;
 }
 
-/* ✅ 收入 / 支出 顏色區分 */
+/* 收入 / 支出 顏色區分 */
 .record-card.income {
   border-left: 6px solid #5ad97c;
 }
@@ -155,7 +155,7 @@ button:hover {
   color: #d94a4a;
 }
 
-/* ✅ 收支小標籤（左上角） */
+/* 收支小標籤（左上角） */
 .record-type-tag {
   font-size: 12px;
   font-weight: bold;

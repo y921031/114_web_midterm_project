@@ -44,6 +44,14 @@ form {
   gap: 18px;
 }
 
+/* label 排版 */
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: bold;
+}
+
 input,
 select {
   width: 100%;
@@ -53,6 +61,7 @@ select {
   border: 1px solid #ccc;
   outline: none;
   transition: all 0.2s;
+  box-sizing: border-box;
 }
 
 input:focus,
@@ -90,7 +99,7 @@ button:hover {
 .add-category {
   display: flex;
   gap: 8px;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 /* 記錄列表 */
@@ -144,6 +153,8 @@ canvas {
   border-radius: 20px;
   margin-top: 30px;
   padding: 10px;
+  width: 100% !important;
+  height: auto !important;
 }
 
 /* 深色模式 */
@@ -171,4 +182,20 @@ canvas {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(8px); }
+}
+
+@media (max-width: 600px) {
+  .type-buttons {flex-direction: column;}
+  form {padding: 15px;}
+  button {width: 100%;}
+  
+  #recordList .record-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
 }

@@ -105,7 +105,13 @@ function renderRecords() {
 
     const div = document.createElement("div");
     div.classList.add("record-card");
-    if (r.type === "收入") div.classList.add("income");
+
+    if (r.type === "收入") {
+      div.classList.add("income");
+    } else {
+      div.classList.add("expense");
+    }
+
     div.innerHTML = `
       <div class="record-info">
         <strong>${r.type}</strong>
@@ -113,10 +119,13 @@ function renderRecords() {
         <span>日期：${r.date}</span>
       </div>
       <div>
-        <span style="font-weight:bold;">$${r.amount}</span>
+        <span class="record-amount" style="font-weight:bold;">
+          ${r.type === "收入" ? "+" : "-"}$${r.amount}
+        </span>
         <button class="delete-btn" data-index="${i}">刪除</button>
       </div>
     `;
+
     recordList.appendChild(div);
   });
 
@@ -124,7 +133,14 @@ function renderRecords() {
   totalExpenseEl.textContent = expenseTotal;
 
   const balance = incomeTotal - expenseTotal;
-  document.getElementById("balance").textContent = balance.toFixed(0);
+  const balanceEl = document.getElementById("balance");
+  balanceEl.textContent = balance.toFixed(0);
+
+  if (balance >= 0) {
+    balanceEl.style.color = "#2e9e53"; // 綠
+  } else {
+    balanceEl.style.color = "#d94a4a"; // 紅
+  }
 
   updateCharts();
 }

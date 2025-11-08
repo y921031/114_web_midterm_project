@@ -5,7 +5,7 @@
 |------|------------|
 | 黃俞媞 | HTML 結構設計、Bootstrap 版面配置、JavaScript 互動功能、localStorage、表單驗證 |
 | 簡宥莉 | CSS 設計、深色模式 |
-| 蒲羿妃 | CSS 設計、RWD、Bootstrap 版面配置 |
+| 蒲羿妃 | CSS 設計、RWD、JavaScript 互動功能 |
 
 ---
 
@@ -34,7 +34,7 @@
 ---
 
 ## GitHub Pages 展示
-> https://account.github.io/114_web_midterm_project/index.html
+> https://y921031.github.io/114_web_midterm_project/index.html
 
 ---
 

@@ -352,9 +352,9 @@ canvas {
   border-radius: 14px;
   
   background-color: #DFF5E1;
-  color: #2B7A4B;
+  color: #b5efff;
 
-  box-shadow: 0 0 10px rgba(120, 200, 150, 0.4);
+  box-shadow: 0 0 10px rgba(168, 216, 255, 0.8);
 }
 
   #charts-container {

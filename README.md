@@ -24,7 +24,7 @@
 
 ## 功能特色
 1. 表單即時驗證（空白、金額需大於0）
-2. 新增「收入」或「支出」紀錄
+2. 新增「收入」或「支出」紀錄，並且以顏色標記區分
 1. 刪除記帳項目
 2. 可自訂分類（如新增「投資」、「旅遊」等）
 3. 自動計算本月與本年收入、支出總額
@@ -34,7 +34,7 @@
 ---
 
 ## GitHub Pages 展示
-> https://account.github.io/114_web_midterm_project(記得改)
+> https://account.github.io/114_web_midterm_project/index.html
 
 ---
 
@@ -44,7 +44,7 @@ midterm_project/
 ├── index.html
 ├── style.css
 ├── script.js
-├── assets/
+├── screenshots/
 └── README.md
 ```
 

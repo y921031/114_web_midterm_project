@@ -8,6 +8,7 @@ const categorySelect = document.getElementById("category");
 const newCategoryInput = document.getElementById("newCategory");
 const totalIncomeEl = document.getElementById("totalIncome");
 const totalExpenseEl = document.getElementById("totalExpense");
+const balanceEl = document.getElementById("balance");
 
 // 收入/支出分類
 const categories = {
@@ -144,16 +145,6 @@ function renderRecords() {
 
   updateCharts();
 }
-
-//美化餘額
-const balanceEl = document.getElementById("balance");
-
-if (balance >= 0) {
-  balanceEl.style.color = "#2e9e53";
-} else {
-  balanceEl.style.color = "#d94a4a";
-}
-
 
 // 刪除紀錄
 recordList.addEventListener("click", (e) => {

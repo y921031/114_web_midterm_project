@@ -347,15 +347,16 @@ canvas {
 .highlight-balance {
   display: inline-block;
   padding: 12px 20px;
-  font-size: 32px;
+  font-size: 26px;
   font-weight: 900;
   border-radius: 14px;
-  
-  background-color: #DFF5E1;
-  color: #b5efff;
 
-  box-shadow: 0 0 10px rgba(168, 216, 255, 0.8);
+  background-color: #EDF2F7;
+  color: #4A5568;
+
+  box-shadow: 0 0 8px rgba(200, 200, 200, 0.4);
 }
+
 
   #charts-container {
     grid-column: 1 / 3;

@@ -11,8 +11,8 @@ const totalExpenseEl = document.getElementById("totalExpense");
 
 // 收入/支出分類
 const categories = {
-  收入: ["薪水","獎金","投資","其他收入"],
-  支出: ["飲食","交通","娛樂","生活用品"]
+  收入: ["薪水", "獎金", "投資", "其他收入"],
+  支出: ["飲食", "交通", "娛樂", "生活用品"]
 };
 
 let records = JSON.parse(localStorage.getItem("records")) || [];
@@ -123,8 +123,21 @@ function renderRecords() {
   totalIncomeEl.textContent = incomeTotal;
   totalExpenseEl.textContent = expenseTotal;
 
+  const balance = incomeTotal - expenseTotal;
+  document.getElementById("balance").textContent = balance.toFixed(0);
+
   updateCharts();
 }
+
+//美化餘額
+const balanceEl = document.getElementById("balance");
+
+if (balance >= 0) {
+  balanceEl.style.color = "#2e9e53";
+} else {
+  balanceEl.style.color = "#d94a4a";
+}
+
 
 // 刪除紀錄
 recordList.addEventListener("click", (e) => {
@@ -174,7 +187,7 @@ function updateCharts() {
   monthChart = new Chart(ctxM, {
     type: "bar",
     data: {
-      labels: ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
+      labels: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
       datasets: [
         { label: "收入", data: monthlyIncome, backgroundColor: isDark ? "#888" : "#4ea1d3" },
         { label: "支出", data: monthlyExpense, backgroundColor: isDark ? "#555" : "#a8d8ff" }
@@ -200,9 +213,9 @@ function updateCharts() {
 
   // 顯示總額文字
   document.getElementById("monthSummary").textContent =
-    `本月收入：$${monthlyIncome.reduce((a,b)=>a+b,0)}, 本月支出：$${monthlyExpense.reduce((a,b)=>a+b,0)}`;
+    `本月收入：$${monthlyIncome.reduce((a, b) => a + b, 0)}, 本月支出：$${monthlyExpense.reduce((a, b) => a + b, 0)}`;
   document.getElementById("yearSummary").textContent =
-    `本年收入：$${incomeData.reduce((a,b)=>a+b,0)}, 本年支出：$${expenseData.reduce((a,b)=>a+b,0)}`;
+    `本年收入：$${incomeData.reduce((a, b) => a + b, 0)}, 本年支出：$${expenseData.reduce((a, b) => a + b, 0)}`;
 }
 
 renderRecords();

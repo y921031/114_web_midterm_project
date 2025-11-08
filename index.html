@@ -60,13 +60,27 @@
     <!-- 統計區 -->
     <section id="summary">
       <h2>統計</h2>
-      <p>本月收入：<span id="totalIncome">0</span></p>
-      <p>本月支出：<span id="totalExpense">0</span></p>
+
+      <div class="summary-wrapper">
+        <!-- 左側：收入 / 支出 -->
+        <div class="summary-left">
+          <p>收入：<span id="totalIncome">0</span></p>
+          <p>支出：<span id="totalExpense">0</span></p>
+        </div>
+
+        <!-- 右側：結餘（醒目） -->
+        <div class="summary-right">
+          <p>結餘</p>
+          <span id="balance" class="highlight-balance">0</span>
+        </div>
+      </div>
     </section>
+
     <div id="charts-container">
       <canvas id="monthChart"></canvas>
       <canvas id="yearChart"></canvas>
     </div>
+    
   </main>
 
   <script src="script.js"></script>

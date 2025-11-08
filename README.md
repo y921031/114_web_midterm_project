@@ -5,7 +5,7 @@
 |------|------------|
 | 黃俞媞 | HTML 結構設計、Bootstrap 版面配置、JavaScript 互動功能、localStorage、表單驗證 |
 | 簡宥莉 | CSS 設計、RWD、深色模式 |
-| 蒲羿妃 |  |
+| 蒲羿妃 | CSS 設計、RWD、Bootstrap 版面配置 |
 
 ---
 
